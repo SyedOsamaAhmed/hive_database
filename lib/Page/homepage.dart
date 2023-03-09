@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late TextEditingController name, id;
-
+  final box = Boxes.getBooks();
   @override
   void initState() {
     name = TextEditingController();
@@ -27,6 +27,12 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void delete(Books book) async {
+    await book.delete();
+  }
+
+  void update(Books book) async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +44,6 @@ class _HomePageState extends State<HomePage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(children: [
-          ValueListenableBuilder(
-            valueListenable: Boxes.getBooks().listenable(),
-            builder: (context, box, child) {
-              var data = box.values.toList().cast<Books>();
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.30,
-                child: ListView.builder(
-                  itemCount: box.length,
-                  itemBuilder: (context, index) {
-                    return Text(data[index].name);
-                  },
-                ),
-              );
-            },
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -66,6 +57,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(hintText: 'Enter Book ID'),
               controller: id,
             ),
@@ -76,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               ElevatedButton(
                 onPressed: () {
                   final book = Books(name.text, int.parse(id.text));
-                  final box = Boxes.getBooks();
+
                   box.add(book);
                   book.save();
                   id.clear();
@@ -88,14 +80,39 @@ class _HomePageState extends State<HomePage> {
                 width: 12,
                 height: 12,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Remove'),
-              ),
             ],
           ),
           const SizedBox(
             height: 12,
+          ),
+          ValueListenableBuilder(
+            valueListenable: Boxes.getBooks().listenable(),
+            builder: (context, box, child) {
+              var data = box.values.toList().cast<Books>();
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.30,
+                child: ListView.builder(
+                  itemCount: box.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(data[index].name),
+                      contentPadding: const EdgeInsets.all(16.0),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                              onTap: () => delete(data[index]),
+                              child: const Icon(Icons.delete)),
+                          InkWell(
+                              onTap: () => update(data[index]),
+                              child: const Icon(Icons.edit)),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ]),
       ),
