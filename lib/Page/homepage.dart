@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:developer' as logs show log;
 import 'package:hive_example/boxes.dart';
 import 'package:hive_example/models/books.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,7 +31,50 @@ class _HomePageState extends State<HomePage> {
     await book.delete();
   }
 
-  void update(Books book) async {}
+  Future<void> _editDialog(Books book) {
+    name.text = book.name;
+    id.text = book.id.toString();
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(children: [
+              TextField(
+                decoration: const InputDecoration(hintText: 'Enter Book Name'),
+                controller: name,
+              ),
+            ]),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () async {
+                  book.name = name.text;
+                  book.id = int.parse(id.text);
+                  await box.put(book.id, Books(name.text, int.parse(id.text)));
+                  name.clear();
+                  id.clear();
+                  if (!mounted) {
+                    return;
+                  }
+                  Navigator.pop(context);
+                },
+                child: const Text('Edit')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('cancel')),
+          ],
+        );
+      },
+    );
+  }
+
+  void update(Books book) async {
+    _editDialog(book);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +92,9 @@ class _HomePageState extends State<HomePage> {
             child: TextField(
               decoration: const InputDecoration(hintText: 'Enter Book Name'),
               controller: name,
+              onChanged: (value) {
+                name.text = value;
+              },
             ),
           ),
           const SizedBox(
@@ -57,6 +103,10 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              onChanged: (value) {
+                id.text = value;
+                logs.log(id.text);
+              },
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(hintText: 'Enter Book ID'),
               controller: id,
@@ -67,7 +117,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  final book = Books(name.text, int.parse(id.text));
+                  Books book = Books(name.text, int.parse(id.text));
 
                   box.add(book);
                   book.save();

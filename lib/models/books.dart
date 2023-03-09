@@ -4,9 +4,9 @@ part 'books.g.dart';
 @HiveType(typeId: 0)
 class Books extends HiveObject {
   @HiveField(0)
-  final String name;
+  String name;
   @HiveField(1)
-  final int id;
+  int id;
 
   Books(this.name, this.id);
 }
