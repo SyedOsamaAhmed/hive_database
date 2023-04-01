@@ -22,9 +22,11 @@ Hive is local storage database used to store data in flutter.
 ### Editing data:
 
 ![edit screen](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot3.png)
-![edit screen2](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screensho4.png)
+![](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot4.png)
 
 
 
 ### Data Added in hive:
-![](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screensho5.png)
+
+
+![result](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot5.png)
