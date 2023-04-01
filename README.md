@@ -1,16 +1,30 @@
-# hive_example
+# Book Info Storage App:
 
-A new Flutter project.
+This app stores books information taking id and name of book as input locally. It is built using **flutter** and **hive** database is used as local storage.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## frontend:
+* flutter
 
-A few resources to get you started if this is your first Flutter project:
+## Database:
+* hive
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## About Hive:
+Hive is local storage database used to store data in flutter.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Outputs:
+### Main screen and after deleting data:
+![main screen](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot1.png)
+
+### Adding data to hive:
+![add screen](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot2.png)
+
+### Editing data:
+
+![edit screen](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screenshot3.png)
+![edit screen2](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screensho4.png)
+
+
+
+### Data Added in hive:
+![](https://github.com/SyedOsamaAhmed/hive_database/blob/main/assets/screensho5.png)
